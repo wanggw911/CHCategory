@@ -37,6 +37,8 @@ typedef void (^UIViewTapActionBlock)(void);
 
 - (void)ch_shakeRotation:(CGFloat)rotation;
 
+- (void)ch_scaling;
+
 #pragma mark - Runtime
 
 - (void)ch_tapActionHandler:(UIViewTapActionBlock _Nullable)block;

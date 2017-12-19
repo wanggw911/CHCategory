@@ -10,8 +10,19 @@
 #import <objc/runtime.h>//获取运行时
 
 static char Key_UIViewTapAction;
-
-
+static inline CAKeyframeAnimation * CHUIViewScalingAnimation() {
+    CAKeyframeAnimation *animate = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+    
+    animate.duration = 0.3;
+    animate.removedOnCompletion = YES;
+    animate.fillMode = kCAFillModeForwards;
+    
+    animate.values = @[[NSValue valueWithCATransform3D:CATransform3DMakeScale(0.7, 0.7, 1.0)],
+                       [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.2, 1.2, 1.0)],
+                       [NSValue valueWithCATransform3D:CATransform3DMakeScale(0.8, 0.8, 1.0)],
+                       [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    return animate;
+}
 
 @implementation UIView (CHExtension)
 
@@ -76,6 +87,10 @@ static char Key_UIViewTapAction;
     anim.duration = .2;
     anim.values = @[@0,@(rotation),@0,@(-rotation),@0];
     [self.layer addAnimation:anim forKey:nil];
+}
+
+- (void)ch_scaling {
+    [self.layer addAnimation:CHUIViewScalingAnimation() forKey:nil];
 }
 
 #pragma mark - Runtime
